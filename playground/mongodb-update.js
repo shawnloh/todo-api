@@ -11,25 +11,34 @@ MongoClient.connect(
 
     const db = client.db('TodoApp');
 
-    // deleteMany
     // db.collection('Todos')
-    //   .deleteMany({ text: 'Eat  lunch' })
+    //   .findOneAndUpdate(
+    //     { _id: new ObjectID('5c6fb734477349667a4bac3a') },
+    //     {
+    //       $set: {
+    //         completed: true
+    //       }
+    //     },
+    //     {
+    //       returnOriginal: false
+    //     }
+    //   )
     //   .then(result => {
     //     console.log(result);
-    //   })
-    //   .catch(err => console.log(err));
+    //   });
 
-    // deleteOne
-    // db.collection('Todos')
-    //   .deleteOne({ text: 'Eat lunch' })
-    //   .then(result => {
-    //     console.log(result);
-    //   })
-    //   .catch(err => console.log(err));
-
-    // findOneAndDelete
-    db.collection('Todos')
-      .findOneAndDelete({ completed: false })
+    db.collection('Users')
+      .findOneAndUpdate(
+        { _id: new ObjectID('5c6facc1b79d5007b0500ca5') },
+        {
+          $inc: {
+            age: 1
+          }
+        },
+        {
+          returnOriginal: false
+        }
+      )
       .then(result => {
         console.log(result);
       });
