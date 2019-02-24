@@ -13,6 +13,7 @@ const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
+// TODOs
 app.post('/todos', (req, res) => {
   const todo = new Todo({
     text: req.body.text
@@ -103,6 +104,29 @@ app.patch('/todos/:id', (req, res) => {
     })
     .catch(e => {
       res.status(400).send();
+    });
+});
+
+// POST /users
+app.post('/users', (req, res) => {
+  const body = _.pick(req.body, ['email', 'password']);
+
+  if (_.isEmpty(body.email) || _.isEmpty(body.password)) {
+    return res.status(400).send();
+  }
+
+  const user = new User(body);
+
+  user
+    .save()
+    .then(user => {
+      return user.generateAuthToken();
+    })
+    .then(token => {
+      res.header('x-auth', token).send(user);
+    })
+    .catch(e => {
+      res.status(400).send(e);
     });
 });
 
