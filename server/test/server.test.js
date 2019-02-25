@@ -121,7 +121,7 @@ describe('DELETE /todos/:id', () => {
         // query database
         Todo.findById(hexId)
           .then(todo => {
-            expect(todo).toBeNull();
+            expect(todo).toBeFalsy();
             done();
           })
           .catch(e => done(e));
@@ -201,7 +201,7 @@ describe('PATCH /todos/:id', () => {
       .expect(200)
       .expect(res => {
         expect(res.body.todo).toMatchObject(bodyToUpdate);
-        expect(res.body.todo.completedAt).toBeNull();
+        expect(res.body.todo.completedAt).toBeFalsy();
       })
       .end(done);
 
@@ -346,7 +346,7 @@ describe('DELETE /users/me/token', () => {
       .end((err, res) => {
         if (err) return done(err);
 
-        expect(res.header['x-auth']).toBeUndefined();
+        expect(res.header['x-auth']).toBeFalsy();
         expect(res.body).toEqual({});
 
         User.findById(users[0]._id)
